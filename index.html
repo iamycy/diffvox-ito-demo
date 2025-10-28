@@ -50,10 +50,10 @@
                             href="https://www.linkedin.com/in/junghyun-koo-525a31251/"
                             target="_blank">Junghyun Koo</a> <sup>2</sup>,
                         Wei-Hsiang Liao <sup>2</sup>,
-                        <a href="http://www.eecs.qmul.ac.uk/~gyorgyf/"
-                            target=”_blank”>György Fazekas</a> <sup>1</sup>,
                         <a href="https://www.yukimitsufuji.com/"
-                            target=”_blank”>Yuki Mitsufuji</a> <sup>23</sup>
+                            target=”_blank”>Yuki Mitsufuji</a> <sup>23</sup>,
+                        <a href="http://www.eecs.qmul.ac.uk/~gyorgyf/"
+                            target=”_blank”>György Fazekas</a> <sup>1</sup>
                     </p>
 
                     <p class="lead">
@@ -126,9 +126,17 @@
                     <img class="img-fluid" src='assets/images/diagram.png'>
                     <br>
                     <br>
-                    <p class="text-center">Figure 1: <em>The proposed model
-                            (upper left) and individual effects for vocal
-                            effects processing. </em></p>
+                    <p class="text-center">Figure 1: <em>Overview of the
+                            proposed calibration method. The prior and the
+                            likelihood log-probability densities in the
+                            parameter space are represented by
+                            two concentric ellipses, coloured blue and green,
+                            respectively. Darker colours
+                            indicate higher density. The coloured arrows
+                            indicate the gradients of the
+                            log-probability densities. The red star is the
+                            optimal parameters for the
+                            vocal effects style transfer. </em></p>
                 </div>
             </div>
 
@@ -137,22 +145,40 @@
                 <hr>
                 <div class="section mb-5">
                     <p>
-                        This section contains the listening samples selected
-                        from the vocal tracks of the MedleyDB dataset.
-                        <b>No effects</b> refers to the original vocal
-                        recording, <b>Target</b> refers to the vocal track
-                        processed with the target effects, <b>DiffVox</b>
-                        refers to the vocal track processed with the
-                        DiffVox model, and <b>w/o Approximation</b> refers to
-                        replacing the approximated delay and reverb
-                        effects in DiffVox with its real-time
-                        implementations.
+                        This section contains the listening samples used in our
+                        MUSHRA test. The reference vocals and the input dry
+                        vocals
+                        are taken from the MedleyDB dataset.
+                        <b>Reference</b> refers to the track with target effects
+                        applied, <b>Anchor</b> is a different vocal track with
+                        no effects applied.
+                        The rest of the columns are the results of applying
+                        different effect settings using diffvox on <b>Anchor</b>
+                        to match the
+                        target effects in <b>Reference</b>.
                         <br>
                         <br>
-                        Pay attention to the tails of the reverbs and delays
-                        between the <b>DiffVox</b> and <b>w/o Approximation</b>.
-                        The latter has slightly longer tails due to
-                        replacing the approximated FIRs with IIRs.
+                        <b>Regression</b> uses a CNN to directly estimate the
+                        parameters from <b>Reference</b>.
+                        <b>NN-MFCC</b> picks the nearest-neighbour vocal preset
+                        in the diffvox training set based on MFCC distance.
+                        <b>ITO-MFCC</b> uses the proposed ITO calibration with
+                        MFCC distance as the style loss.
+                        <b>ITO-AFx-Rep</b> uses the proposed ITO calibration
+                        with the embedding distance from the pre-trained AFx-Rep
+                        encoder as the style loss.
+                        <b>Oracle</b> uses the effect parameters estimated by
+                        accessing the ground truth dry vocal track of the
+                        reference.
+                        <br>
+                        <br>
+                        In addition, we separate this section into Group A and
+                        B, which were randomly assigned to different
+                        participants in the MUSHRA test to avoid fatigue
+                        effects. The groups are divided so that each track
+                        appears only once in each group, and if it is used as a
+                        reference in one group, it can only be used as the raw
+                        vocal in the other group.
                     </p>
                 </div>
 
@@ -1390,11 +1416,11 @@
                     <hr>
                     <div style="background-color: #e9ecef;">
                         <pre><code>
-@inproceedings{ycy2025diffvox,
-    title={DiffVox: A Differentiable Model for Capturing and Analysing Vocal Effects Distributions}, 
-    author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Ben Hayes and Wei-Hsiang Liao and György Fazekas and Yuki Mitsufuji},
-    year={2025},
-    booktitle={Proc. DAFx},
+@inproceedings{ycy2025ito,
+     title={Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior}, 
+     author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Wei-Hsiang Liao and Yuki Mitsufuji and György Fazekas},
+     year={2025},
+     booktitle={Proc. WASPAA},
 }
   </code></pre>
                     </div>
